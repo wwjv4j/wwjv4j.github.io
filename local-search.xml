@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title></title>
+    <link href="/2023/03/10/hexo+github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
+    <url>/2023/03/10/hexo+github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
+    
+    <content type="html"><![CDATA[<h1 id="如何使用hexo-gihub搭建博客并运用hexo官网的主题"><a href="#如何使用hexo-gihub搭建博客并运用hexo官网的主题" class="headerlink" title="如何使用hexo+gihub搭建博客并运用hexo官网的主题"></a>如何使用hexo+gihub搭建博客并运用hexo官网的主题</h1><p>因为某些缘故也是要搭建一个自己的博客，但是因为没有自己的域名，所以选择用GitHub搭建一个博客。在这期间也是遇到了各种各样的问题，网上到处找教学但是还是会出现某些错误。于是打算写一篇文章记录一下自己的方法啊，也是一个总结吧。</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Hello World</title>
     <link href="/2023/03/09/hello-world/"/>
     <url>/2023/03/09/hello-world/</url>
