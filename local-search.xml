@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>方向导数的概念整理</title>
+    <link href="/2023/03/30/%E6%96%B9%E5%90%91%E5%AF%BC%E6%95%B0/"/>
+    <url>/2023/03/30/%E6%96%B9%E5%90%91%E5%AF%BC%E6%95%B0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="关于方向导数的整理"><a href="#关于方向导数的整理" class="headerlink" title="关于方向导数的整理"></a>关于方向导数的整理</h1><p>今天写微积分作业的时候，突然发现自己对方向导数的概念很模糊，基本没概念，估计是上课讲的时候没听，因此在进行了解过后写一篇文章来整理一下。<br><br></p><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>就我自己理解，方向导数就是一个函数往方向向量方向变化的变化率，设这个方向向量的单位向量为u &#x3D; ($\alpha$,$\beta$,$\gamma$),然后假如函数f(x,y,z)对x的偏导为a，那这就是函数f在(1,0,0)方向的变化率，所以在u方向的变化率就是(a,b,c)*u。(a,b,c分别是f对x,y,z的偏导)</p><h2 id="梯度"><a href="#梯度" class="headerlink" title="梯度"></a>梯度</h2><p>那么这样就定义出了梯度的概念。如果方向向量可变，要让方向导数最大，那么就是方向导数的方向要与(a,b,c)相同。这样，方向导数的大小就是|(a,b,c)|,因此把(a,b,c)称为梯度，记作grad。</p><h2 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h2><p>不过上述的概念都是在函数f有偏导的情况下，从定义出发，方向导数是一个向量场在某一点处沿着给定方向的导数，它表示该向量场在该点处的变化率沿着该方向的分量。更具体地说，设 $\mathbf{f}(\mathbf{x})$ 为定义在 $\mathbb{R}^n$ 上的向量场，$\mathbf{u}$ 为一个单位向量，则 $\mathbf{f}(\mathbf{x})$ 在点 $\mathbf{x}$ 沿着方向 $\mathbf{u}$ 的方向导数为：</p><p>$$D_{\mathbf{u}}\mathbf{f}(\mathbf{x}) &#x3D; \lim_{h\to 0} \frac{\mathbf{f}(\mathbf{x}+h\mathbf{u})-\mathbf{f}(\mathbf{x})}{h}$$</p><p>如果该极限存在，则称该方向导数存在。方向导数可以用来描述向量场在某一点处的变化率和变化方向。</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>dijkstra算法</title>
     <link href="/2023/03/26/dijkstra%E7%AE%97%E6%B3%95/"/>
     <url>/2023/03/26/dijkstra%E7%AE%97%E6%B3%95/</url>

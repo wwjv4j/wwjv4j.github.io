@@ -16,15 +16,15 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="#关于dijkstra算法的理解还在努力研究中……">
+    <meta name="description" content="关于方向导数的整理今天写微积分作业的时候，突然发现自己对方向导数的概念很模糊，基本没概念，估计是上课讲的时候没听，因此在进行了解过后写一篇文章来整理一下。 概念就我自己理解，方向导数就是一个函数往方向向量方向变化的变化率，设这个方向向量的单位向量为u &#x3D; ($\alpha$,$\beta$,$\gamma$),然后假如函数f(x,y,z)对x的偏导为a，那这就是函数f在(1,0,0)方向">
 <meta property="og:type" content="article">
-<meta property="og:title" content="dijkstra算法">
-<meta property="og:url" content="http://example.com/2023/03/26/dijkstra%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:title" content="方向导数的概念整理">
+<meta property="og:url" content="http://example.com/2023/03/30/%E6%96%B9%E5%90%91%E5%AF%BC%E6%95%B0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="#关于dijkstra算法的理解还在努力研究中……">
+<meta property="og:description" content="关于方向导数的整理今天写微积分作业的时候，突然发现自己对方向导数的概念很模糊，基本没概念，估计是上课讲的时候没听，因此在进行了解过后写一篇文章来整理一下。 概念就我自己理解，方向导数就是一个函数往方向向量方向变化的变化率，设这个方向向量的单位向量为u &#x3D; ($\alpha$,$\beta$,$\gamma$),然后假如函数f(x,y,z)对x的偏导为a，那这就是函数f在(1,0,0)方向">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-03-26T13:48:10.379Z">
-<meta property="article:modified_time" content="2023-03-26T13:54:57.754Z">
+<meta property="article:published_time" content="2023-03-30T13:41:50.948Z">
+<meta property="article:modified_time" content="2023-03-30T13:59:57.502Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -32,7 +32,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>dijkstra算法 - Hexo</title>
+  <title>方向导数的概念整理 - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -213,7 +213,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="dijkstra算法"></span>
+            <span id="subtitle" data-typed-text="方向导数的概念整理"></span>
           
         </div>
 
@@ -224,8 +224,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-26 21:48" pubdate>
-          2023年3月26日 晚上
+        <time datetime="2023-03-30 21:41" pubdate>
+          2023年3月30日 晚上
         </time>
       </span>
     
@@ -236,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          25 字
+          732 字
         
       </span>
     
@@ -247,7 +247,7 @@
         
         
         
-          1 分钟
+          7 分钟
         
       </span>
     
@@ -293,12 +293,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">dijkstra算法</h1>
+            <h1 style="display: none">方向导数的概念整理</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年3月26日 晚上
+                    本文最后更新于：2023年3月30日 晚上
                   
                 
               </p>
@@ -306,7 +306,12 @@
             
               <div class="markdown-body">
                 
-                <h1 id="关于dijkstra算法的理解"><a href="#关于dijkstra算法的理解" class="headerlink" title="#关于dijkstra算法的理解"></a>#关于dijkstra算法的理解</h1><p>还在努力研究中……</p>
+                <h1 id="关于方向导数的整理"><a href="#关于方向导数的整理" class="headerlink" title="关于方向导数的整理"></a>关于方向导数的整理</h1><p>今天写微积分作业的时候，突然发现自己对方向导数的概念很模糊，基本没概念，估计是上课讲的时候没听，因此在进行了解过后写一篇文章来整理一下。<br><br></p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>就我自己理解，方向导数就是一个函数往方向向量方向变化的变化率，设这个方向向量的单位向量为u &#x3D; ($\alpha$,$\beta$,$\gamma$),然后假如函数f(x,y,z)对x的偏导为a，那这就是函数f在(1,0,0)方向的变化率，所以在u方向的变化率就是(a,b,c)*u。(a,b,c分别是f对x,y,z的偏导)</p>
+<h2 id="梯度"><a href="#梯度" class="headerlink" title="梯度"></a>梯度</h2><p>那么这样就定义出了梯度的概念。如果方向向量可变，要让方向导数最大，那么就是方向导数的方向要与(a,b,c)相同。这样，方向导数的大小就是|(a,b,c)|,因此把(a,b,c)称为梯度，记作grad。</p>
+<h2 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h2><p>不过上述的概念都是在函数f有偏导的情况下，从定义出发，方向导数是一个向量场在某一点处沿着给定方向的导数，它表示该向量场在该点处的变化率沿着该方向的分量。更具体地说，设 $\mathbf{f}(\mathbf{x})$ 为定义在 $\mathbb{R}^n$ 上的向量场，$\mathbf{u}$ 为一个单位向量，则 $\mathbf{f}(\mathbf{x})$ 在点 $\mathbf{x}$ 沿着方向 $\mathbf{u}$ 的方向导数为：</p>
+<p>$$D_{\mathbf{u}}\mathbf{f}(\mathbf{x}) &#x3D; \lim_{h\to 0} \frac{\mathbf{f}(\mathbf{x}+h\mathbf{u})-\mathbf{f}(\mathbf{x})}{h}$$</p>
+<p>如果该极限存在，则称该方向导数存在。方向导数可以用来描述向量场在某一点处的变化率和变化方向。</p>
 
                 
               </div>
@@ -326,18 +331,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/30/%E6%96%B9%E5%90%91%E5%AF%BC%E6%95%B0/" title="方向导数的概念整理">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">方向导数的概念整理</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/03/10/hexo+github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" title="如何使用hexo+gihub搭建博客并运用hexo官网的主题">
-                        <span class="hidden-mobile">如何使用hexo+gihub搭建博客并运用hexo官网的主题</span>
+                      <a href="/2023/03/26/dijkstra%E7%AE%97%E6%B3%95/" title="dijkstra算法">
+                        <span class="hidden-mobile">dijkstra算法</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
