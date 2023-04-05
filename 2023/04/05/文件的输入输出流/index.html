@@ -16,15 +16,15 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="今天写数据结构实验的时候出现一道关于文件读写的题目，虽然上学期c语言老师已经讲过了，但现在已经忘的差不多了，所以写这篇博客重新复习一下（其实是实在不知道写什么）。##什么是文件文件是一段数据的集合，这些数据可以是有规则的，也可以是无序的集合。在stdio.h里面有一个非常重要的东西，文件指针，每个文件都会在内存中开辟一块空间，用于存放文件的相关信息，这些信息保存在一个结构体中： 123456789">
+    <meta name="description" content="今天写数据结构实验的时候出现一道关于文件读写的题目，虽然上学期c语言老师已经讲过了，但现在已经忘的差不多了，所以写这篇博客重新复习一下（其实是实在不知道写什么）。 什么是文件文件是一段数据的集合，这些数据可以是有规则的，也可以是无序的集合。在stdio.h里面有一个非常重要的东西，文件指针，每个文件都会在内存中开辟一块空间，用于存放文件的相关信息，这些信息保存在一个结构体中： 1234567891">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于文件的输入输出">
 <meta property="og:url" content="http://example.com/2023/04/05/%E6%96%87%E4%BB%B6%E7%9A%84%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="今天写数据结构实验的时候出现一道关于文件读写的题目，虽然上学期c语言老师已经讲过了，但现在已经忘的差不多了，所以写这篇博客重新复习一下（其实是实在不知道写什么）。##什么是文件文件是一段数据的集合，这些数据可以是有规则的，也可以是无序的集合。在stdio.h里面有一个非常重要的东西，文件指针，每个文件都会在内存中开辟一块空间，用于存放文件的相关信息，这些信息保存在一个结构体中： 123456789">
+<meta property="og:description" content="今天写数据结构实验的时候出现一道关于文件读写的题目，虽然上学期c语言老师已经讲过了，但现在已经忘的差不多了，所以写这篇博客重新复习一下（其实是实在不知道写什么）。 什么是文件文件是一段数据的集合，这些数据可以是有规则的，也可以是无序的集合。在stdio.h里面有一个非常重要的东西，文件指针，每个文件都会在内存中开辟一块空间，用于存放文件的相关信息，这些信息保存在一个结构体中： 1234567891">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-05T13:05:42.956Z">
-<meta property="article:modified_time" content="2023-04-05T13:27:38.653Z">
+<meta property="article:modified_time" content="2023-04-05T13:30:28.139Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -236,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          605 字
+          601 字
         
       </span>
     
@@ -306,10 +306,11 @@
             
               <div class="markdown-body">
                 
-                <p>今天写数据结构实验的时候出现一道关于文件读写的题目，虽然上学期c语言老师已经讲过了，但现在已经忘的差不多了，所以写这篇博客重新复习一下（其实是实在不知道写什么）。<br>##什么是文件<br>文件是一段数据的集合，这些数据可以是有规则的，也可以是无序的集合。在<code>stdio.h</code>里面有一个非常重要的东西，文件指针，每个文件都会在内存中开辟一块空间，用于存放文件的相关信息，这些信息保存在一个结构体中：</p>
+                <p>今天写数据结构实验的时候出现一道关于文件读写的题目，虽然上学期c语言老师已经讲过了，但现在已经忘的差不多了，所以写这篇博客重新复习一下（其实是实在不知道写什么）。</p>
+<h2 id="什么是文件"><a href="#什么是文件" class="headerlink" title="什么是文件"></a>什么是文件</h2><p>文件是一段数据的集合，这些数据可以是有规则的，也可以是无序的集合。在<code>stdio.h</code>里面有一个非常重要的东西，文件指针，每个文件都会在内存中开辟一块空间，用于存放文件的相关信息，这些信息保存在一个结构体中：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp">struct_iobuf&#123;<br>    <span class="hljs-type">char</span> * _ptr;<span class="hljs-comment">//指向buffer中第一个未读的字节</span><br>    <span class="hljs-type">int</span> _cnt;<span class="hljs-comment">//记录剩余的未读字节的个数</span><br>    <span class="hljs-type">char</span> * _base;<span class="hljs-comment">//文件的缓冲</span><br>    <span class="hljs-type">int</span> _flag;<span class="hljs-comment">//打开文件的属性</span><br>    <span class="hljs-type">int</span> _file;<span class="hljs-comment">//获取文件描述</span><br>    <span class="hljs-type">int</span> _charbuf;<span class="hljs-comment">//单字节的缓冲，即缓冲大小仅为1个字节</span><br>    <span class="hljs-type">int</span> _bufsiz;<span class="hljs-comment">//记录这个缓冲大小</span><br>    <span class="hljs-type">char</span> * _tmpfname;<span class="hljs-comment">//临时文件名</span><br>&#125;;<br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">_iobuf</span> FILE;<br></code></pre></td></tr></table></figure>
-<p>FILE是一个数据结构，用于访问一个流。每个流都会对应一个FILE结构体。<br>##数据流，缓冲区，文件类型，文件存取方式</p>
-<ul>
+<p>FILE是一个数据结构，用于访问一个流。每个流都会对应一个FILE结构体。</p>
+<h2 id="数据流，缓冲区，文件类型，文件存取方式"><a href="#数据流，缓冲区，文件类型，文件存取方式" class="headerlink" title="数据流，缓冲区，文件类型，文件存取方式"></a>数据流，缓冲区，文件类型，文件存取方式</h2><ul>
 <li><h4 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h4></li>
 </ul>
 <p>就C程序而言，从程序移进，移出字节，这种字节流就叫做流。程序与数据的交互是以流的形式进行的。进行C语言文件的读写时，都会进行“打开文件”操作，这个操作就是在打开数据流，而“关闭文件”操作就是关闭数据流。</p>
