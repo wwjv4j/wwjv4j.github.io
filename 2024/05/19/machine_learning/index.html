@@ -1,0 +1,319 @@
+<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90&quot;&gt;算法设计与分析&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E4%B8%80-%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90&quot;&gt;一 数据分析&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E7%9B%B8%E5%85%B3%E6%80%A7%E5%88%86%E6%9E%90&quot;&gt;相关性分析&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%80%BB%E7%BB%93&quot;&gt;总结&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E4%BA%8C-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92&quot;&gt;二 逻辑回归&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%8E%9F%E7%90%86&quot;&gt;原理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%AE%9E%E7%8E%B0&quot;&gt;实现&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E7%BB%93%E6%9E%9C&quot;&gt;结果&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E4%B8%89-cart%E5%86%B3%E7%AD%96%E6%A0%91&quot;&gt;三 CART决策树&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%8E%9F%E7%90%86-1&quot;&gt;原理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%AE%9E%E7%8E%B0-1&quot;&gt;实现&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E7%BB%93%E6%9E%9C-1&quot;&gt;结果&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%9B%9B-cart%E5%86%B3%E7%AD%96%E6%A0%91%E6%9E%84%E5%BB%BA%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97&quot;&gt;四 CART决策树构建随机森林&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%AE%9E%E7%8E%B0-2&quot;&gt;实现&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E7%BB%93%E6%9E%9C-2&quot;&gt;结果&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%80%BB%E7%BB%93%E4%B8%8E%E4%BD%93%E4%BC%9A&quot;&gt;总结与体会&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99&quot;&gt;参考资料&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;项目要求&quot;&gt;&lt;a href=&quot;#项目要求&quot; class=&quot;headerlink&quot; title=&quot;项目要求&quot;&gt;&lt;/a&gt;项目要求&lt;/h2&gt;&lt;p&gt;项目与数据链接: &lt;a href=&quot;https://www.kaggle.com/competitions/playground-series-s4e1&quot;&gt;银行用户流失预测&lt;/a&gt;"><link rel="stylesheet" type="text/css" href="/css/normalize.css"><link rel="stylesheet" type="text/css" href="/css/highlight.css"><link rel="stylesheet" type="text/css" href="/css/noise.css"><title>手搓逻辑回归，决策树，随机森林 | Welcome to Wwj's blog</title><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><meta name="generator" content="Hexo 7.1.1"></head><body><article class="wrapper"><div class="post-main"><div class="nav"><nav class="container"><a class="sidebar-nav-item active" href="/">Home</a></nav><div class="container post-meta"><div class="post-time">2024-05-19</div></div></div><div class="container post-header"><h1>手搓逻辑回归，决策树，随机森林</h1></div><div class="container post-toc"><details class="toc"><summary class="toc-accordion">Table of Contents</summary><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E8%A6%81%E6%B1%82"><span class="toc-number">1.</span> <span class="toc-text">项目要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">算法设计与分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="toc-number">2.1.</span> <span class="toc-text">一 数据分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%80%A7%E5%88%86%E6%9E%90"><span class="toc-number">2.1.1.</span> <span class="toc-text">相关性分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.1.2.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92"><span class="toc-number">2.2.</span> <span class="toc-text">二 逻辑回归</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">2.2.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.2.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">2.2.3.</span> <span class="toc-text">结果</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89-CART%E5%86%B3%E7%AD%96%E6%A0%91"><span class="toc-number">2.3.</span> <span class="toc-text">三 CART决策树</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-1"><span class="toc-number">2.3.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0-1"><span class="toc-number">2.3.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C-1"><span class="toc-number">2.3.3.</span> <span class="toc-text">结果</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B-CART%E5%86%B3%E7%AD%96%E6%A0%91%E6%9E%84%E5%BB%BA%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97"><span class="toc-number">2.4.</span> <span class="toc-text">四 CART决策树构建随机森林</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0-2"><span class="toc-number">2.4.1.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C-2"><span class="toc-number">2.4.2.</span> <span class="toc-text">结果</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%8E%E4%BD%93%E4%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">总结与体会</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol></details></div><div class="container post-content"><hr>
+<ul>
+<li><a href="#%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90">算法设计与分析</a><ul>
+<li><a href="#%E4%B8%80-%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90">一 数据分析</a><ul>
+<li><a href="#%E7%9B%B8%E5%85%B3%E6%80%A7%E5%88%86%E6%9E%90">相关性分析</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92">二 逻辑回归</a><ul>
+<li><a href="#%E5%8E%9F%E7%90%86">原理</a></li>
+<li><a href="#%E5%AE%9E%E7%8E%B0">实现</a></li>
+<li><a href="#%E7%BB%93%E6%9E%9C">结果</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-cart%E5%86%B3%E7%AD%96%E6%A0%91">三 CART决策树</a><ul>
+<li><a href="#%E5%8E%9F%E7%90%86-1">原理</a></li>
+<li><a href="#%E5%AE%9E%E7%8E%B0-1">实现</a></li>
+<li><a href="#%E7%BB%93%E6%9E%9C-1">结果</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B-cart%E5%86%B3%E7%AD%96%E6%A0%91%E6%9E%84%E5%BB%BA%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97">四 CART决策树构建随机森林</a><ul>
+<li><a href="#%E5%AE%9E%E7%8E%B0-2">实现</a></li>
+<li><a href="#%E7%BB%93%E6%9E%9C-2">结果</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E6%80%BB%E7%BB%93%E4%B8%8E%E4%BD%93%E4%BC%9A">总结与体会</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+<hr>
+<h2 id="项目要求"><a href="#项目要求" class="headerlink" title="项目要求"></a>项目要求</h2><p>项目与数据链接: <a target="_blank" rel="noopener" href="https://www.kaggle.com/competitions/playground-series-s4e1">银行用户流失预测</a></p>
+<p>通过对提供的<strong>165034</strong>条用户的相关数据进行分析，建立<strong>预测模型</strong>，预测不同用户流失的概率，从而采取相关措施降低流失率。</p>
+<p>预测用户的流失率，看起来是一个回归问题，但是由于用户只有流失和不流失两种可能，因此该问题也可以看成一个二分类问题，在分类的过程中间接的获取用户流失的概率。而对于二分类的问题，首先想到的就是逻辑回归，SVM，其次便是决策树和随机森林等模型。</p>
+<p>因此该报告通过逻辑回归，决策树以及随机森林三个模型，对问题和数据进行多方面的分析和改进。</p>
+<h2 id="算法设计与分析"><a href="#算法设计与分析" class="headerlink" title="算法设计与分析"></a>算法设计与分析</h2><h3 id="一-数据分析"><a href="#一-数据分析" class="headerlink" title="一 数据分析"></a>一 数据分析</h3><p>训练集给出的数据包括</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>数据编号</td>
+</tr>
+<tr>
+<td>CustomerId</td>
+<td>银行用户编号</td>
+</tr>
+<tr>
+<td>Surname</td>
+<td>用户的姓氏</td>
+</tr>
+<tr>
+<td>CreditScore</td>
+<td>用户的信用评分</td>
+</tr>
+<tr>
+<td>Geography</td>
+<td>用户所在的国家</td>
+</tr>
+<tr>
+<td>Gender</td>
+<td>用户的性别</td>
+</tr>
+<tr>
+<td>Age</td>
+<td>用户的年龄</td>
+</tr>
+<tr>
+<td>Tenure</td>
+<td>用户在银行的年限</td>
+</tr>
+<tr>
+<td>Balance</td>
+<td>用户的银行余额</td>
+</tr>
+<tr>
+<td>NumOfProducts</td>
+<td>用户拥有的银行产品数量</td>
+</tr>
+<tr>
+<td>HasCrCard</td>
+<td>用户是否拥有信用卡 (1: 是, 0: 否)</td>
+</tr>
+<tr>
+<td>IsActiveMember</td>
+<td>用户是否是活跃会员 (1: 是, 0: 否)</td>
+</tr>
+<tr>
+<td>EstimatedSalary</td>
+<td>用户的估计薪水</td>
+</tr>
+<tr>
+<td>Exited</td>
+<td>用户是否已流失 (1: 是, 0: 否)</td>
+</tr>
+</tbody></table>
+<p>观察之后很明显可以推测id, CustomerId, Surname对结果的影响很小甚至无影响，因此将这三个属性从训练集和测试集中删除。</p>
+<h4 id="相关性分析"><a href="#相关性分析" class="headerlink" title="相关性分析"></a>相关性分析</h4><p>同时通过对每个属性中不同类别的用户流失的占比进行分析，兼顾卡方检验，点二列相关系数，寻找可能对用户流失存在影响的属性。</p>
+<p>下面展示不同年龄段用户的数量以及用户Exited的占比：</p>
+<table><tr>
+<td><img src=./images/age3.png border=0></td>
+<td><img src=./images/age2.png border=0></td>
+<td><img src=./images/age1.png border=0></td>
+</tr></table>
+<p style="font-size:13px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp各个年龄段用户数量 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 各个年龄段流失用户数量 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 各个年龄段用户流失占比</p>
+<br>
+以及男女用户中流失的比例
+
+<table>
+<thead>
+<tr>
+<th>Female</th>
+<th>Male</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>27.96867%</td>
+<td>15.905529%</td>
+</tr>
+</tbody></table>
+<p>对此可以初步得出关于年龄和性别的<strong>简单结论</strong>：</p>
+<ul>
+<li><strong>Age</strong> 在30-40这个年龄段用户数量居多，但流失的人数却不及40-50年龄段用户，而且年龄在40以上的用户流失占比迅速增加，因此用户流失的可能性与年龄的大小存在联系。<br></li>
+<li><strong>Gender</strong> 女性用户流失的概率可能比男性用户更大。</li>
+</ul>
+<p><strong>对于其他数据，因为篇幅有限，因此直接给出分析得到的结果：</strong></p>
+<ul>
+<li><strong>CreditScore</strong> 大部分用户的信誉评分都在500以上，且较为符合正态分布，但通过以50为区间长度进行分段并求出各个分段的流失人数占比后发现并<strong>无明显差别</strong>。同时计算该属性与是否流失之间的<strong>点二列相关系数</strong>，（该系数用于衡量一个二元变量和一个连续变量之间的关系，绝对值越接近1说明相关性越强），结果为 <strong>-0.027</strong>，说明该属性与是否流失之间的线<strong>性关系非常微小</strong>，因此初步推测该属性可能对预测结果无影响。<br></li>
+<li><strong>Geography</strong> 提供的数据集中绝大部分都是France人，但相反的，其流失人数占比确是比其他两个国家的占比都小，为<strong>7%<strong>，Spain比其略大，为</strong>9%</strong> 左右。但Germany的用户数量虽然较少，但是流失率却接近<strong>40%<strong>，</strong>远远大于</strong>其他两个国家。可能是由于Germany用户不多存在一定偶然性，但任存在这种可能：Germany的用户流失的可能性<strong>远远大于</strong>其他两个地方。<br></li>
+<li><strong>Tenure</strong> 用户在银行中的年限比较平均的分布在1-9年中，但并没有出现常识中的待得越久，流失越少的情况，而是分布较为随机，并<strong>没有明显趋势</strong>。之后通过对该属性与是否流失进行卡方独立性检验（卡方独立性检验是研究两类变量之间的关联性和依存性，或相关性、独立性、交互作用性的一种方法，得到的结果包含卡方统计量和p值，卡方统计量越大，相关性越强，<strong>P值越小，相关性越强</strong>，当P值小于0.05这个显著性水平时，则可认为两者存在较强烈的关系）。最后得到卡方统计量为265.46，P值为<strong>3.02e-51，远远小于0.05</strong>，因此该属性与结果之间<strong>存在显著联系</strong>。<br></li>
+<li><strong>Balance</strong> 数据集中账户余额为0的用户占比为55%，也就是说为0和不为0的用户对半分。除去余额为0的用户后，计算余额与是否流失之间的<strong>点二列相关系数</strong>，结果为<strong>0.0066</strong>，说明两者之间<strong>几乎没有线性关系</strong>。因此将该属性分为两类，有余额和没有余额。计算两者流失占比，发现流失率并没有偏向于没有余额的用户，反而是在银行中<strong>存有余额的用户流失占比更高</strong>，达到了27%，比没有余额的占比多了11%。这其中可能是余额的不同也会照成一定的影响。<br></li>
+<li><strong>NumOfProducts</strong> 由于数据集中47%的用户只有一个产品，51%的用户有两个产品，其他产品数量的用户太少，数据具有太多的随机性，因此难以信任。但是从只有一个产品的用户的流失率远大于两个产品的用户流失率可以推测：拥有的产品数量越多，用户越不容易流失。<br></li>
+<li><strong>HasCrCard</strong> 虽然有有信用卡的人是没有信用卡的人的三倍，但两者用户中<strong>流失率接近相等</strong>，都在21%上下，推测这个属性对预测结果的影响可能比较小。<br></li>
+<li><strong>IsActiveMember</strong> 通过比较活跃用户和非活跃用户的流失占比,发现非活跃用户的流失率为<strong>30%</strong>, 而活跃用户的流失率仅为<strong>12%</strong>,因此推测非活跃用户的流失可能性更大.<br></li>
+<li><strong>EstimatedSalary</strong> 通过计算其与是否流失的<strong>点二列相关系数</strong>,得到结果<strong>0.0188</strong>,推测两者关系可能很小。同时将工资水平以20000为一个区间,共分成10段,计算每个区间内用户的流失率,发现10个区间的流失率<strong>都在20%上下</strong>,因此推测工资水平对用户是否流失的影响有限。</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>通过上述分析，初步打算删除<strong>CreditScore</strong>, <strong>HasCrCard</strong>, <strong>EstimateSalary</strong>三个属性,从而选出可能与预测结果有关系的属性集：</p>
+<table>
+<thead>
+<tr>
+<th>Age</th>
+<th>Gender</th>
+<th>Geography</th>
+<th>Tenure</th>
+<th>Balance</th>
+<th>NumOfProducts</th>
+<th>IsActiveMember</th>
+</tr>
+</thead>
+</table>
+<p>其中Balance由于余额非0的用户中余额对流失率的影响很小，因此将该属性变为<strong>离散数据</strong>，具有余额则为1，没有余额则为0。</p>
+<p>同时对于Geography属性拆分成<strong>France, Spain, Germany</strong>三列，每一列是一个二元属性，1代表属于这个国家。</p>
+<p>因此，最终得到的属性<strong>共9个</strong>：<br>Age, Gender, Tenure, Balance, NumOfProducts, IsActiveMember, France, Spain, Germany。</p>
+<h3 id="二-逻辑回归"><a href="#二-逻辑回归" class="headerlink" title="二 逻辑回归"></a>二 逻辑回归</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>逻辑回归的主要目的，就是找到这么一个合理的系数W,对于参数X<br>$$<br>\boldsymbol{z} &#x3D; \boldsymbol{w_1x_1} + \boldsymbol{w_2x_2} + … + \boldsymbol{w_nx_n} &#x3D; \boldsymbol{W^TX}<br>$$<br>而对于需要预测的结果为1的概率p，使用<strong>逻辑函数Sigmoid</strong>来计算:<br>$$<br>\boldsymbol{p&#x3D;\frac{1}{1+e^{-z}}}<br>$$<br>因此，问题就回到了如何得到一个合理的系数W。</p>
+<p>如果已知一个系数W和m个样本，那么就可以得到每个样本都按照实际的结果发生的总概率，在本题中就是训练集中所有客户流失情况都和实际一样的概率，即似然函数：<br>$$<br>\boldsymbol{L(W) &#x3D; \prod_{i&#x3D;1}^{m} p^{y_i}(1-p)^{1-y_i}}<br>$$<br>其中p是计算获得的流失的概率，$y_i$是实际的流失情况。</p>
+<p>因此，这个合适的系数就是使得似然函数最大的系数，即<strong>极大化似然函数</strong>对应的参数W。</p>
+<p>对此，我使用对数似然函数构造一个<strong>损失函数</strong><br>$$<br>\boldsymbol{Loss(W) &#x3D; -\frac{1}{m} \sum_{i&#x3D;1}^{m} [y_i \log(p) + (1 - y_i) \log(1 - p)]}<br>$$<br>用<strong>梯度下降法</strong>求出使得损失函数最小的系数W。而梯度下降的方向就是损失函数的对于各个属性的偏导数：<br>$$<br>\boldsymbol{\frac{\partial Loss(W)}{\partial w_j} &#x3D; \frac{1}{m} \sum_{i&#x3D;1}^{m} (p^{i} - y^{i})x_j^{i}}<br>$$<br>$m$ 是样本用户数量。<br>$p^{i}$ 是第$i$个用户预测的流失概率。<br>$y^{i}$ 是第$i$个用户的真实流失情况（1或0）<br>$x_j^{i}$ 是第$i$个样本的第$j$个特征值。</p>
+<p>这样，就得到了系数W的计算方法，不断迭代：<br>$$\boldsymbol{W^{k+1}&#x3D;W^{k} - \alpha * \frac{\partial Loss(W{k})}{\partial W^{k}}}$$<br>$\alpha$是学习率，使得系数W以一个合适的速度进行迭代，防止速度过慢导致耗时增加或者速度过快导致偏离最优解。</p>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>在对数据进行处理和掌握逻辑回归的原理后，使用<strong>python</strong>进行逻辑回归模型实现。</p>
+<p>将整个实现分为6个部分：</p>
+<ol>
+<li><strong>data_handle</strong> 数据处理函数，根据第一部分进行的数据分析对训练数据和测试数据进行相应处理。</li>
+<li><strong>percentage</strong> 概率预测函数，根据提供的用户参数X和系数W，使用sigmod对用户流失的概率进行预测。</li>
+<li><strong>loss</strong> 损失函数，根据当前系数W和训练数据，使用上述公式计算损失函数的值。</li>
+<li><strong>gradient</strong> 梯度函数，使用上述公式计算当前系数W的各个属性的偏导数，返回一个数组。</li>
+<li><strong>train</strong> 训练函数，不断的调用损失函数和梯度函数，更新系数W的值，直到达到一定次数。</li>
+<li><strong>get_ans</strong> 预测函数，对测试集中的用户预测流失的概率，并输入到ans_logistic.csv文件中。</li>
+</ol>
+<h4 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h4><p>由于我实现的逻辑回归的<strong>时间复杂度为O(mnt)</strong>,其中m是样本数量，n是特征属性数量，t是迭代次数。<br>因此对于一次性训练所有训练集中的数据耗时很大。采用<strong>分批训练</strong>，将训练数据分为5组，分别求5组数据的预测概率最后取平均值。</p>
+<p>但是实际训练的过程中发现，<strong>学习率为0.02</strong>的情况下，损失函数的值跳跃性很大，并没有像预期的逐渐收敛到某个值，初步分析是<strong>学习率过大</strong>导致更新步长过大，导致损失函数震荡。但经过测试发现，需要把学习率调的非常小，达到0.001，损失函数才不会震荡，但此时损失函数的变化非常小，每次训练步长维持在0.00005上下，这将导致训练次数需要很大，耗时很长。</p>
+<p>为了解决这一问题，再次观察逻辑回归的原理和数据集，注意到逻辑回归本质上是系数W与属性X的线性相乘，如果属性X中某个属性$x_i$的值相比于其他属性过大时，将会导致相同的梯度下，该属性对结果造成的影响将会很大，导致步长过大，最终使得模型<strong>过度依赖</strong>于该属性。</p>
+<p>因此将Age，Tenure， NumOfProducts进行归一化处理后，以0.02的学习率再次进行训练并预测。将<strong>前后两个结果的损失函数</strong>和测试结果在kaggle上的正确率进行对比：</p>
+<table><tr>
+<td><img src=./images/loss1.png border=0></td>
+<td><img src=./images/loss2.png border=0></td>
+</tr></table>
+
+<table>
+<thead>
+<tr>
+<th>归一化前正确率</th>
+<th>归一化后正确率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>56.462%</td>
+<td>68.849%</td>
+</tr>
+</tbody></table>
+<p>可以看到，无论是损失函数还是正确率，归一化后的数据都更优于未归一化的数据。</p>
+<p>最后，不断调整合适的学习率，，学习率为0.1经过100次迭代后，测试集在kaggle上的正确率达到了72.635%。</p>
+<h3 id="三-CART决策树"><a href="#三-CART决策树" class="headerlink" title="三 CART决策树"></a>三 CART决策树</h3><p>由于逻辑回归最后的预测结果并没到达到预期的85%，因此考虑使用决策树模型进行预测。</p>
+<h4 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h4><p>决策树的基本思路是每次在剩余特征属性中选择一个最佳的特征作为一个节点对数据进行分割，将数据分为2部分或多个部分，分割后的部分重复该过程，直到某个节点的数据集只属于一个类别，也即该数据集的用户全部流失或全部存在，或者节点数据集数量为0，或者只剩下一个特征属性，则把该节点作为叶子节点，并根据该节点的数据集的特征，对其进行分类。</p>
+<p>分割的指标有<strong>信息增益</strong>，<strong>增益比</strong>和<strong>基尼系数</strong>。<br>前面两者生成的决策树是多叉树，而基尼系数生成的决策树是二叉树。考虑到逻辑回归训练时由于数据量太大而导致耗时远超预期，本决策树使用基尼系数作为划分指标。</p>
+<p><strong>基尼系数</strong>，我的理解是它评价的是一个数据集的纯度。由于我们的目标是把数据分割为易于分类的几个部分，而基尼系数的公式为：</p>
+<p>$$ \boldsymbol{Gini(D) &#x3D; \sum_{i&#x3D;1}^{n} p(x_i)*(1-p(x_i)) }$$</p>
+<p>D是数据集，$p(x_i)$是分类$x_i$出现的概率，n是分类数目，由于该问题是二分类，因此基尼系数为：</p>
+<p>$$ \boldsymbol{Gini(D) &#x3D; 2<em>p</em>(1-p) }$$</p>
+<p>$p$是数据集D中用户流失的占比。</p>
+<p>根据公式可以看出，如果一个数据集中流失用户的占比和不流失的占比一样，可以判断该数据集不够纯，这时基尼系数将达到最大；如果一个数据集中流失用户的占比远大于或远小于不流失的占比，说明该数据集纯度很高，基本只有一种类型，这时基尼系数将会非常小。因此<strong>基尼系数越小，数据纯度越高</strong>。</p>
+<p>而根据属性X将数据分为$D_1$$D_2$两个部分时，基尼系数定义为：<br>$$<br>\boldsymbol{Gini(D|A) &#x3D; \frac{|D_1|}{|D|}Gini(D_1) + \frac{|D_2|}{|D|}Gini(D_2)}<br>$$</p>
+<p>对于一个属性X，分割数据集的方法便是先对数据集X的值进行唯一性排序，即把X所有出现过的值取出来进行排序，找到其中一个分割点，使得分割出来的两个数据集基尼系数最小。</p>
+<h4 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h4><p>同样是使用python实现，将整个过程分为五个部分。</p>
+<ol>
+<li><strong>data_handle</strong> 数据处理函数，处理流程与逻辑回归相同。</li>
+<li><strong>gini_label</strong> 基尼指数计算函数，根据输入的数据集和特征属性，找到最优的分割点对数据进行分割。</li>
+<li><strong>generate_decision_tree</strong> 决策树生成函数，采用递归的方法，不对生成子节点和叶子节点，最后返回整颗决策树。</li>
+<li><strong>percentage</strong> 概率预测函数，根据输入的用户属性和决策树，找到该用户归属的叶子节点，返回该用户流失的概率。</li>
+<li><strong>get_ans</strong> 结果输出函数，对于测试集中的每个用户，调用predict函数获取用户流失概率，并将结果输出到ans_decision.csv文件。</li>
+</ol>
+<p>对于决策数生成函数generate_decision_tree，首先判断是否为叶子节点，若是叶子节点，直接返回该节点，若不是叶子节点，计算剩余的属性集中每个属性的基尼系数gini(D|X)，并将其中最小的基尼系数用作当前节点分割的属性，将当前数据集分为两部分。然后从属性集中删除该属性，使用分割后的两个数据集调用generate_decision_tree函数并加入当前节点的左右子树。</p>
+<p>对于决策树的结构，采用字典嵌套的结构来保存一颗决策树，每个节点的字典含有4个键值对</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>value</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>info</td>
+<td>‘leaf’ 或 ‘non-leaf’</td>
+<td>节点是否为叶子节点</td>
+</tr>
+<tr>
+<td>label</td>
+<td>分割信息或概率</td>
+<td>若是叶子节点，则为流失概率，若不是，则为一个二元列表，包含该节点分割的属性和分割点</td>
+</tr>
+<tr>
+<td>left</td>
+<td>左子树</td>
+<td>分割后的数据集构建出来的子树，若是叶子节点则没有该项</td>
+</tr>
+<tr>
+<td>right</td>
+<td>右子树</td>
+<td>分割后的数据集构建出来的子树，若是叶子节点则没有该项</td>
+</tr>
+</tbody></table>
+<p>而对于叶子节点的判断以及概率计算方法有三种：</p>
+<ul>
+<li><strong>数据集为空</strong> 由于数据集为空，因此设置流失概率为0.5。</li>
+<li><strong>gini为0</strong> 即只有一种数据，这时该节点的用户流失概率为0或1。</li>
+<li><strong>属性集只剩下一种属性</strong> 流失概率为$\frac{流失人数}{该数据集总人数}$。</li>
+</ul>
+<h4 id="结果-1"><a href="#结果-1" class="headerlink" title="结果"></a>结果</h4><p>使用所有训练数据集进行决策树的搭建后，对测试集的用户数据进行流失概率预测，将测试结果放在kaggle上提交，正确率达到**84.750%**，相比于逻辑回归有了很大的提升，但仍未达到目标85%，因此考虑对模型或者算法进行优化。</p>
+<p>想到能不能用上述逻辑回归时相同的方法，将<strong>数据分成多批</strong>，生成多颗决策树，然后每颗决策树都得到一个用户流失概率，最后的结果便是多颗决策树的平均值。这与随机森林的思想相似。</p>
+<h3 id="四-CART决策树构建随机森林"><a href="#四-CART决策树构建随机森林" class="headerlink" title="四 CART决策树构建随机森林"></a>四 CART决策树构建随机森林</h3><h4 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h4><p>我的随机森林的实现并没有大的改动点，思路是基于上述的CART决策树，通过每次随机有放回的取出row_num个用户数据，并从属性集中随机无放回的取出column_num个属性构成一个数据集，并使用该数据集生成一颗CART决策树，该过程重复tree_num次，得到tree_num颗决策树构成随机森林。</p>
+<p>因此，该随机森林的参数有三个，随机取出的<strong>数据数量</strong>row_num，随机取出的<strong>属性个数</strong>columm_num，<strong>决策树数量</strong>tree_num。</p>
+<h4 id="结果-2"><a href="#结果-2" class="headerlink" title="结果"></a>结果</h4><p>由于每次构建决策树的过程都是随机的，因此最后得到的结果具有一定随机性，但经过多次参数调整和测试，在决策树数量为50，随机属性数量为8，每次选取数据数量为5000的参数下，正确率相比单颗决策树有微小的提升，大多数时候正确率在<strong>85%左右</strong>。</p>
+<h2 id="总结与体会"><a href="#总结与体会" class="headerlink" title="总结与体会"></a>总结与体会</h2><p>对于三个模型的底层实现，并没有想象中的那么困难，通过结合课堂知识和查找的资料，我顺利完成了模型的构建。对于这个过程的主要的工作，我认为在数据分析和处理方面。</p>
+<p>在完成模型代码的编写后，我尝试对数据<strong>不进行</strong>任何删除或修改，仅将字符串转化为数字编码，在这种情况下，三个模型的准确率分别为**61%，78%，83%<strong>，处理后的正确率为</strong>72%，84%，85%**。可见每个模型对于数据的敏感性和鲁棒性还是有较大差别的。</p>
+<p>结合上述内容，对这三个模型进行总结：</p>
+<ul>
+<li><strong>逻辑回归</strong> 逻辑回归的思路非常直接，但这也导致了其追求的是数据与结果之间的线性关系，对于非线性关系，可能性能并不会很理想。同时，逻辑回归对于数据的敏感性相比于其他两个模型就比较明显，归一化前后的两次预测中损失函数的变化就很直观的表明了这一点：如果一个属性相比于其他属性过大，将会导致模型过多的关注该属性，而忽略了其他属性。<br></li>
+<li><strong>CART决策树</strong> 由决策树的原理可以看出，该模型并没有对数据于结果的关系进行假设，因此它对于非线性的关系也是可以处理的。但由于其分割数据集进行分类的特点，存在对数据的依赖性，很容易就造成过拟合<br></li>
+<li><strong>随机森林</strong> 因为是由多颗决策树共同决定预测的结果，决策树对于数据的依赖的问题得到了缓解，这点从数据处理前后预测准确率相差无几可以看出。随机性选取数据和属性的特点也增强了该模型的泛化能力。但需要调整的参数过多，想要找到一个最优的参数并不容易。而且其随机的特点导致根本不知道运行过程中的具体情况，每次运行都是一个不同的结果。</li>
+</ul>
+<p>最后，三个模型测试集的测试结果在kaggle上的准确率如下表：</p>
+<table>
+<thead>
+<tr>
+<th>逻辑回归</th>
+<th>CART决策树</th>
+<th>随机森林</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.72635</td>
+<td>0.84750</td>
+<td>0.85449</td>
+</tr>
+</tbody></table>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li>周志华. 机器学习: 第 3 章. 清华大学出版社, 2016.</li>
+<li>决策树基本原理 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/112161073">https://zhuanlan.zhihu.com/p/112161073</a></li>
+<li>Bagging算法 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/355416998">https://zhuanlan.zhihu.com/p/355416998</a></li>
+</ol>
+</div></div><div class="post-main post-comment"></div></article><link rel="stylesheet" type="text/css" href="//cdn.bootcdn.net/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcdn.net/ajax/libs/lato-font/3.0.0/css/lato-font.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcdn.net/ajax/libs/fancybox/2.1.5/jquery.fancybox.css"><script src="//cdn.bootcdn.net/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="//cdn.bootcdn.net/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script><script>$(document).ready(function() {
+  $(".fancybox").fancybox();
+});
+</script></body></html>
