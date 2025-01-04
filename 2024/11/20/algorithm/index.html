@@ -1,0 +1,46 @@
+<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="&amp;#x3D;&amp;#x3D;树上差分&amp;#x3D;&amp;#x3D;"><link rel="stylesheet" type="text/css" href="/css/normalize.css"><link rel="stylesheet" type="text/css" href="/css/highlight.css"><link rel="stylesheet" type="text/css" href="/css/noise.css"><title> | Welcome to Wwj's blog</title><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><meta name="generator" content="Hexo 7.1.1"></head><body><article class="wrapper"><div class="post-main"><div class="nav"><nav class="container"><a class="sidebar-nav-item active" href="/">Home</a></nav><div class="container post-meta"><div class="post-time">2024-11-20</div></div></div><div class="container post-header"><h1></h1></div><div class="container post-toc"><details class="toc"><summary class="toc-accordion">Table of Contents</summary><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="toc-number">1.</span> <span class="toc-text">&#x3D;&#x3D;动态规划&#x3D;&#x3D;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="toc-number">1.0.1.</span> <span class="toc-text">线性动态规划</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%83%8C%E5%8C%85%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="toc-number">1.0.2.</span> <span class="toc-text">背包动态规划</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BA%E9%97%B4%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="toc-number">1.0.3.</span> <span class="toc-text">区间动态规划</span></a></li></ol></li></ol></li></ol></details></div><div class="container post-content"><p>&#x3D;&#x3D;树上差分&#x3D;&#x3D;</p>
+<p>&#x3D;&#x3D;二维差分和前缀和&#x3D;&#x3D;</p>
+<p>&#x3D;&#x3D;LCA（倍增，targan）&#x3D;&#x3D;</p>
+<p>&#x3D;&#x3D;树链剖分&#x3D;&#x3D;</p>
+<p>&#x3D;&#x3D;链式向前星&#x3D;&#x3D;</p>
+<p>&#x3D;&#x3D;二分查找&#x3D;&#x3D;那边没有那个1：<br>即end &#x3D; mid - 1， start &#x3D; mid + 1<br>结果就会偏向哪边(start &lt; end)<br>ps: 两头要根据具体情况加特判<br>ps: 不用加特判，但是要注意查找队列不能为空<br>ps: 在偏向左边时，查找失败时需要加特判<br>ps: 如果存在数相等的情况，要分析一下在哪里加等号：<br>即若查找的是第一个大于的数的位置，把相等看成小于即可<code>array[mid] &lt;= num; start = mid + 1</code><br>若查找的是第一个小于的数的位置，把相等看成大于于即可<code>array[mid] &gt;= num; end = mid - 1</code><br>其他情况比较复杂，具体情况具体分析</p>
+<p>&#x3D;&#x3D;快速排序&#x3D;&#x3D;</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> quickSort(<span class="built_in">int</span> i, <span class="built_in">int</span> j) &#123;</span><br><span class="line">    <span class="keyword">if</span>(j &lt;= i) <span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">int</span> mid = <span class="built_in">num</span>[(i+j) &gt;&gt; <span class="number">1</span>];</span><br><span class="line">    <span class="built_in">int</span> l = i - <span class="number">1</span>, r = j + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(l &lt; r) &#123;</span><br><span class="line">        <span class="keyword">do</span> l++; <span class="keyword">while</span>(<span class="built_in">num</span>[l] &gt; mid);    <span class="comment">//这样写是为了防止num[l] == num[r] == mid，进入无限循环</span></span><br><span class="line">        <span class="keyword">do</span> r--; <span class="keyword">while</span>(<span class="built_in">num</span>[r] &lt; mid);</span><br><span class="line">        <span class="keyword">if</span>(l &lt; r) swap(<span class="built_in">num</span>[l], <span class="built_in">num</span>[r]);</span><br><span class="line">    &#125;</span><br><span class="line">    quickSort(i, r);</span><br><span class="line">    quickSort(r+<span class="number">1</span>, j);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;双指针&#x3D;&#x3D;</p>
+<p>&#x3D;&#x3D;分块&#x3D;&#x3D;：通过对原数据集的适当划分，并在划分后的每一个块上预处理部分信息，从而较一般的暴力算法取得更优的时间复杂度，本质上是一种暴力优化。</p>
+<p>&#x3D;&#x3D;剪枝&#x3D;&#x3D;：通过某种满段，避免一些不必要的遍历过程。应用剪枝的核心是设计剪枝判断方法，即确定哪些枝条应当舍弃，哪些枝条应当保留。<br>剪枝分为可行性剪枝和最优性剪枝：</p>
+<ul>
+<li>可行性剪枝 判断继续搜索能否得到答案，如果不能直接回溯</li>
+<li>最优性剪枝 记录当前的最优值，如果当前节点后续以及无法产生超过该最优值的解时，直接回溯。</li>
+</ul>
+<p>&#x3D;&#x3D;优先队列定义排序的方法注意事项&#x3D;&#x3D;：</p>
+<ol>
+<li>需要声明容器</li>
+<li>若是自定义比较类，是把类放进去而不是对象，(vecotr是传入一个对象)</li>
+<li>默认是大根堆，用的是std::less<int>类</li>
+<li>小根堆用std::greater<int></li>
+<li>自定义比较函数对象需要重载(),例：<code>priority_queue&lt;int, vector&lt;int&gt;, Compare&gt; pq;</code></li>
+<li>可以重载 &lt; 符号<br>&#x3D;&#x3D;vector&#x3D;&#x3D;排序注意事项</li>
+<li>可以定义一个函数对象 <code>sort(vec.begin(), vec.end(), Compare());</code></li>
+<li>也可以定义一个函数指针 <code>sort(vec.begin(), vec.end(), compare);</code></li>
+<li>还可以重载元素的 &lt; 符号</li>
+</ol>
+<p>&#x3D;&#x3D;dijkstra&#x3D;&#x3D;<br><strong>dijkstra</strong>使用一个优先队列来存储当前访问到的节点到起点的距离，并使用一个visited数组来判断某一节点是否以及得到最优。<br><strong>不过</strong>这里面存在一个问题：就是如果一个节点出现了更优解，那么这个节点之前的路径长度会一直留在优先队列中，具体的影响没算过，大家好像都忽略这个。<br><strong>ps</strong>: 懂了，因为随着元素的逐个弹出，这个废弃的路径也会被弹出，这个时候visited就再次派上用场了，若已访问过，则说明弹出的路径不是最优解，直接跳过。<br><strong>ps</strong>: 这样visited是多余的，因为可以通过判断弹出的路径和目前的最优解做比较，若比不上目前的最优解，就不用再继续判断了，直接跳过。(有了visited更直观)；</p>
+<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="&#x3D;&#x3D;动态规划&#x3D;&#x3D;"></a>&#x3D;&#x3D;动态规划&#x3D;&#x3D;</h2><p><strong>无后效性， 子问题最优性</strong><br>若目标是求最值问题，则需要考虑动态规划了。<br>个人认为，背包dp的核心是容量，区间dp的核心是子区间合并，找到核心的状态转移方程。</p>
+<h4 id="线性动态规划"><a href="#线性动态规划" class="headerlink" title="线性动态规划"></a>线性动态规划</h4><p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2501">P2501</a></p>
+<p>&#x3D;&#x3D;最长上升子序列(n^2和nlogn)&#x3D;&#x3D;<br><strong>n^2</strong><br>以第0个元素开头的子数组中的最长上升子序列满足子问题最优性和无后效性，因此迭代以第i个元素结尾的最长上升子序列。<br>每次都往第0到i-1元素中寻找小于第i个元素的最长的上升子序列，这样转移方程很容易可得：<br>$$<br>f[i] &#x3D; max(f[j])_{j&lt;i, num[j]&lt;num[i]} + 1<br>$$<br>逐个迭代至最后一个元素。复杂度为<strong>n^2</strong></p>
+<p><strong>nlogn</strong><br>换一个切入点呢？不以队列的元素作为切入点，而是以所求结果作为切入点。<br>对于每个元素，都有一个以该元素结尾的最长上升子序列，因此可以记录长度为l的最长上升子序列中有多少节点，这样对于第i个元素，寻找前面小于$f[i]$的长度最大的元素。这样看起来似乎也没有优化什么还是n^2复杂度。</p>
+<p><strong>但是</strong>，注意到对于每个长度为l的集合，只需要比较其中的最小值就可以了，若最小值满足条件，则$f[i]$可以接在其后面，长度为l+1；<br>这样复杂度就为nm，m为上升子序列长度。</p>
+<p>不过还可以优化，随着长度的增加，其集合最小值都是递增的，因为若不是递增，则肯定存在一个更优的替换掉前一个。因此可以用二分查找，这样复杂度就是<strong>nlogn。</strong></p>
+<p><strong>ps:</strong> 还可以通过该集合遍历所有的长度为i的上升子序列，每次搜索的长度-1即可。如果有什么特殊要求的话又可以借助线性动态规划。<br><strong>ps:</strong> 递增子序列和不下降子序列可以相互转换 <code>num[i] = num[i] - i</code></p>
+<p>总结：线性动态规划通过迭代队列中每个元素，借助于前面子序列的结果来进行问题优化。但是结果记录的切入点不同，复杂度很不一样。</p>
+<h4 id="背包动态规划"><a href="#背包动态规划" class="headerlink" title="背包动态规划"></a>背包动态规划</h4><p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5322">P5322</a></p>
+<p>一般来说，如果存在容量相关概念，可以考虑是否是背包动态规划。</p>
+<h4 id="区间动态规划"><a href="#区间动态规划" class="headerlink" title="区间动态规划"></a>区间动态规划</h4><p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/solution/P2466">P2466</a><br><strong>ps</strong>: 在常规动态规划问题中，当前行动造成的花费往往是不会影响后续行动的，也即当前行动的花费当前即可计算完成，后续的花费与该行动无关。但在某些问题中，当前行动的花费会对后续行动产生影响，即产生了花费滞后性。<br>简单来说就是当前决策会对后续的价值计算产生影响。<br>这种情况下，可以试着寻找到不变的那个节点，或者提前将当前决策后续的花费计算出来，使得后续的价值计算不受影响。从而找到矛盾所在。</p>
+<p>区间dp，即对一个区间做动态规划，其本质上也是在一个线性数组上做操作。区间dp问题可通过对子区间求解，然后子区间不断合并最终得到整个区间的解。<br>一般来说，dp[i][j]代表着区间i-j的最优解，那么问题的本质就成了怎么从小区间合并成大区间的问题。<br>经典算法<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1880">石子合并</a></p>
+<p>&#x3D;&#x3D;四边形不等式&#x3D;&#x3D;</p>
+</div></div><div class="post-main post-comment"></div></article><link rel="stylesheet" type="text/css" href="//cdn.bootcdn.net/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcdn.net/ajax/libs/lato-font/3.0.0/css/lato-font.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcdn.net/ajax/libs/fancybox/2.1.5/jquery.fancybox.css"><script src="//cdn.bootcdn.net/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="//cdn.bootcdn.net/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script><script>$(document).ready(function() {
+  $(".fancybox").fancybox();
+});
+</script></body></html>

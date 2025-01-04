@@ -1,0 +1,200 @@
+<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=" id=&quot;基于剪枝算法的深度神经网络压缩&quot;&gt;&lt;a href=&quot;#基于剪枝算法的深度神经网络压缩&quot; class=&quot;headerlink&quot; title=&quot;基于剪枝算法的深度神经网络压缩&quot;&gt;&lt;/a&gt;基于剪枝算法的深度神经网络压缩&lt;/h2&gt;&lt;h3 id=&quot;任务要求&quot;&gt;&lt;a href=&quot;#任务要求&quot; class=&quot;headerlink&quot; title=&quot;任务要求&quot;&gt;&lt;/a&gt;任务要求&lt;/h3&gt;&lt;p&gt;对CNN分类神经网络进行权重剪枝实现模型压缩。"><link rel="stylesheet" type="text/css" href="/css/normalize.css"><link rel="stylesheet" type="text/css" href="/css/highlight.css"><link rel="stylesheet" type="text/css" href="/css/noise.css"><title> | Welcome to Wwj's blog</title><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><meta name="generator" content="Hexo 7.1.1"></head><body><article class="wrapper"><div class="post-main"><div class="nav"><nav class="container"><a class="sidebar-nav-item active" href="/">Home</a></nav><div class="container post-meta"><div class="post-time">2025-01-04</div></div></div><div class="container post-header"><h1></h1></div><div class="container post-toc"><details class="toc"><summary class="toc-accordion">Table of Contents</summary><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%89%AA%E6%9E%9D%E7%AE%97%E6%B3%95%E7%9A%84%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%8E%8B%E7%BC%A9"><span class="toc-number">1.</span> <span class="toc-text">基于剪枝算法的深度神经网络压缩</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E8%A6%81%E6%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">任务要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.2.</span> <span class="toc-text">任务实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">实现原理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">实现模型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B"><span class="toc-number">1.2.0.3.</span> <span class="toc-text">实现过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="toc-number">1.2.0.4.</span> <span class="toc-text">结果分析</span></a></li></ol></li></ol></li></ol></li></ol></details></div><div class="container post-content"><h2 id="基于剪枝算法的深度神经网络压缩"><a href="#基于剪枝算法的深度神经网络压缩" class="headerlink" title="基于剪枝算法的深度神经网络压缩"></a>基于剪枝算法的深度神经网络压缩</h2><h3 id="任务要求"><a href="#任务要求" class="headerlink" title="任务要求"></a>任务要求</h3><p>对CNN分类神经网络进行权重剪枝实现模型压缩。</p>
+<h3 id="任务实现"><a href="#任务实现" class="headerlink" title="任务实现"></a>任务实现</h3><h5 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h5><p>研究表明，大多数神经网络的权重分布接近正态分布，即权值越接近0，权重的数量就越多。这表明网络中许多参数对最终预测结果的贡献较小。</p>
+<p>因此，可以通过一些剪枝算法识别并移除这些不必要的参数，减少模型的复杂度。同时剪枝后，模型的权重矩阵变得更加稀疏，提高计算效率并减少存储需求。</p>
+<p>根据任务提供的权重剪枝实现，可得任务要求的权重剪枝具体步骤如下</p>
+<ul>
+<li>计算测试集中最后一层卷积层每个输出特征图的的神经元激活值。</li>
+<li>根据得出的神经元激活值进行排序。</li>
+<li>对于含有P个特征图的卷积层，按照激活值从小到大的顺序，逐步将一个神经元的权重和偏置设为0，直至仅剩下激活值最高的神经元。</li>
+<li>在上述过程中，每剪枝一个神经元，记录当前模型在测试集上的准确率。</li>
+</ul>
+<h5 id="实现模型"><a href="#实现模型" class="headerlink" title="实现模型"></a>实现模型</h5><p>一个简单的分类模型，使用MINIST数据集，具体网络结构如下</p>
+<table>
+<thead>
+<tr>
+<th>层类型</th>
+<th>输入形状</th>
+<th>输出形状</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Conv2d</strong></td>
+<td>(, 2, 28, 28)</td>
+<td>(, 8, 28, 28)</td>
+<td>stride&#x3D;1, padding&#x3D;1</td>
+</tr>
+<tr>
+<td>LeakyReLU</td>
+<td>\</td>
+<td>\</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>Conv2d</strong></td>
+<td>(, 8, 28, 28)</td>
+<td>(, 16, 28, 28)</td>
+<td>stride&#x3D;1, padding&#x3D;1</td>
+</tr>
+<tr>
+<td>LeakyReLU</td>
+<td>\</td>
+<td>\</td>
+<td>-</td>
+</tr>
+<tr>
+<td>MaxPool2d</td>
+<td>(, 16, 28, 28)</td>
+<td>(, 16, 14, 14)</td>
+<td>kernel_size&#x3D;2, stride&#x3D;2</td>
+</tr>
+<tr>
+<td>Dropout</td>
+<td>\</td>
+<td>\</td>
+<td>p&#x3D;0.1</td>
+</tr>
+<tr>
+<td><strong>Conv2d</strong></td>
+<td>(, 16, 14, 14)</td>
+<td>(, 32, 14, 14)</td>
+<td>stride&#x3D;1, padding&#x3D;1</td>
+</tr>
+<tr>
+<td>LeakyReLU</td>
+<td>\</td>
+<td>\</td>
+<td>-</td>
+</tr>
+<tr>
+<td>MaxPool2d</td>
+<td>(, 32, 14, 14)</td>
+<td>(, 32, 7, 7)</td>
+<td>kernel_size&#x3D;2, stride&#x3D;2</td>
+</tr>
+<tr>
+<td>Dropout</td>
+<td>\</td>
+<td>\</td>
+<td>p&#x3D;0.1</td>
+</tr>
+<tr>
+<td><strong>Conv2d</strong></td>
+<td>(, 32, 7, 7)</td>
+<td>(, 64, 5, 5)</td>
+<td>stride&#x3D;1, padding&#x3D;0</td>
+</tr>
+<tr>
+<td>LeakyReLU</td>
+<td>\</td>
+<td>\</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Dropout</td>
+<td>\</td>
+<td>\</td>
+<td>p&#x3D;0.1</td>
+</tr>
+<tr>
+<td><strong>Conv2d</strong></td>
+<td>(, 64, 5, 5)</td>
+<td>(, 64, 5, 5)</td>
+<td>stride&#x3D;1, padding&#x3D;1</td>
+</tr>
+<tr>
+<td>LeakyReLU</td>
+<td>\</td>
+<td>\</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Dropout</td>
+<td>\</td>
+<td>\</td>
+<td>p&#x3D;0.1</td>
+</tr>
+<tr>
+<td>Flatten</td>
+<td>(, 64, 5, 5)</td>
+<td>(, 1600)</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>Linear</strong></td>
+<td>(, 1600)</td>
+<td>(, 64)</td>
+<td>in_features&#x3D;1600, out_features&#x3D;64</td>
+</tr>
+<tr>
+<td>LeakyReLU</td>
+<td>\</td>
+<td>\</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>Linear</strong></td>
+<td>(, 64)</td>
+<td>(, 32)</td>
+<td>in_features&#x3D;64, out_features&#x3D;32</td>
+</tr>
+<tr>
+<td>LeakyReLU</td>
+<td>\</td>
+<td>\</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>Linear</strong></td>
+<td>(, 32)</td>
+<td>(, 1)</td>
+<td>in_features&#x3D;32, out_features&#x3D;1</td>
+</tr>
+</tbody></table>
+<h5 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h5><p>为提取最后一层卷积层的输出(经过激活函数处理)，在该层的输出定义一个钩子函数</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr"># 定义钩子函数，用于提取conv4</span>的输出值</span><br><span class="line">def hook<span class="comment">(model, input, output)</span>:</span><br><span class="line">    co<span class="symbol">nv4</span>_output[<span class="string">&quot;conv4&quot;</span>] = output.detach<span class="comment">()</span></span><br></pre></td></tr></table></figure>
+
+<p>由于激活函数为<strong>LeakyReLU</strong>，因此输出特征值可能为负数。在生成平均输出特征图时不对卷积层输出值取绝对值，但对于64个输出特征图的神经元激活，若直接对输出相加取平均，则可能导致正值和负值相互抵消，从而低估了激活强度。因此，在计算神经元激活值时，对输出特征值取绝对值后累加求均值。具体实现代码如下</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">for <span class="selector-tag">img</span>, <span class="selector-tag">label</span> in test_loader:</span><br><span class="line">    label = label.<span class="built_in">view</span>(-<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">    output = <span class="built_in">model</span>(img)</span><br><span class="line">    # 对输出特征图进行累加求均值</span><br><span class="line">    # 对<span class="number">64</span>个神经元的激活值取绝对值然后累加求均值</span><br><span class="line">    for i in <span class="built_in">range</span>(<span class="number">64</span>):</span><br><span class="line">        # 计算神经元激活</span><br><span class="line">        neuron_activation[<span class="built_in">str</span>(i)] += <span class="built_in">abs</span>(conv4_output[<span class="string">&quot;conv4&quot;</span>][<span class="number">0</span>][i])</span><br><span class="line">            .<span class="built_in">sum</span>().<span class="built_in">item</span>() / (<span class="number">25.0</span> * <span class="built_in">len</span>(test_loader))</span><br><span class="line">        # 计算输出特征图</span><br><span class="line">        avg_output[i] += conv4_output[<span class="string">&quot;conv4&quot;</span>][<span class="number">0</span>][i].<span class="built_in">detach</span>().<span class="built_in">numpy</span>() / <span class="built_in">len</span>(test_loader)</span><br></pre></td></tr></table></figure>
+<p>最后得到剪枝前最后一层卷积层在整个测试数据集上的平均输出特征图(尺寸<code>64*5*5</code>)，具体情况如图1所示</p>
+<div align="center">
+    <figure>
+        <img src="./image/1.png" alt="平均输出特性图" width="380" height="350">
+        <figcaption>图 1 平均输出特征图</figcaption>
+    </figure>
+</div>
+
+<p>然后根据神经元激活计算结果，对64个输出特征图的神经元激活值进行从小到达的排序，结果如图2所示</p>
+<div align="center">
+    <figure>
+        <img src="./image/activation.png" alt="损失函数" width="525" height="350">
+        <figcaption>图2 神经元激活曲线</figcaption>
+    </figure>
+</div>
+
+<p>从图中可以看出，最小的神经元激活值为<strong>0.0825</strong>，最大为<strong>0.4462</strong>。这表明前者对预测结果的影响较小，而后者对预测结果的影响较大。</p>
+<p>在进行权重剪枝前，测试集准确率为**97.26%**。接下来，对测试集进行63次剪枝并记录准确率，每次按照神经元激活值从小到大的顺序，对对应的神经元权重进行剪枝(将神经元权重和偏置设为0)。具体代码为</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># compute_accuracy()函数用于计算模型的准确率</span></span><br><span class="line"><span class="attribute">accuracy_pruning</span> =<span class="meta"> []</span></span><br><span class="line"><span class="attribute">accuracy_pruning</span>.append(compute_accuracy())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算剪枝后的准确率</span></span><br><span class="line"><span class="attribute">for</span> i in range(<span class="number">63</span>):</span><br><span class="line">    <span class="comment"># 对第i个神经元进行剪枝，前i个神经元权重置0</span></span><br><span class="line">    <span class="attribute">with</span> torch.no_grad():</span><br><span class="line">        <span class="attribute">model</span>.conv4[<span class="number">0</span>].weight[int(neuron_activation[i][<span class="number">0</span>])].fill_(<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># 记录剪枝后的准确率</span></span><br><span class="line">    <span class="attribute">accuracy</span> = compute_accuracy()</span><br><span class="line">    <span class="attribute">accuracy_pruning</span>.append(accuracy)</span><br></pre></td></tr></table></figure>
+
+<p>最终生成准确率与剪枝数量的折线图，如图3所示</p>
+<div align="center">
+    <figure>
+    <img src="./image/pruned.png" alt="损失函数" width="463" height="350">
+    <figcaption>图3 准确率-剪枝数折线图</figcaption>
+    </figure>
+</div>
+
+<h5 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h5><p>观察剪枝前的平均输出特征图，除了少数几个特征图的值偏小外，其余特征图并没有表现出显著差异。但通过观察准确率-剪枝数折线图可知，</p>
+<ul>
+<li><p>对激活值最小的五个神经元权重进行剪枝，模型在测试集上的预测准确率几乎没有变化。</p>
+</li>
+<li><p>甚至剪枝掉一半的神经元，模型的测试集准确率依旧在**95%**以上。</p>
+</li>
+<li><p>随着剪枝的神经元激活值逐渐增加，模型性能的下降速度显著加快：准确率从 <strong>97.27%</strong> 降至 <strong>95.01%</strong> 过程中，剪枝掉了<strong>37</strong>个神经元；准确率从 <strong>95.01%</strong> 降到 <strong>80.84%</strong> 过程中，剪枝掉了 <strong>17</strong> 个神经元；而到了后期，准确率从 <strong>80.84%</strong> 到 <strong>60.11%</strong> 过程中，只剪枝掉了<strong>5</strong>个神经元。</p>
+</li>
+</ul>
+<p>因此可知，激活值越小的神经元，其权重对模型性能的影响越小。通过剪枝这些激活值较低的神经元，不仅能够在几乎不影响模型性能的情况下显著减少模型参数，还能够减小模型参数，提高计算效率。</p>
+</div></div><div class="post-main post-comment"></div></article><link rel="stylesheet" type="text/css" href="//cdn.bootcdn.net/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcdn.net/ajax/libs/lato-font/3.0.0/css/lato-font.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcdn.net/ajax/libs/fancybox/2.1.5/jquery.fancybox.css"><script src="//cdn.bootcdn.net/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="//cdn.bootcdn.net/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script><script>$(document).ready(function() {
+  $(".fancybox").fancybox();
+});
+</script></body></html>
